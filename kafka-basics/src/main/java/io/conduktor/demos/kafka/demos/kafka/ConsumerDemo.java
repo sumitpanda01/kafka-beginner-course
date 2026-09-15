@@ -1,4 +1,4 @@
-package io.conduktor.demos.kafka;
+package io.conduktor.demos.kafka.demos.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

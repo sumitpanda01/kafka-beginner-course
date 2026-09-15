@@ -1,4 +1,4 @@
-package io.conduktor.demos.kafka;
+package io.conduktor.demos.kafka.demos.kafka;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-public class ProducerDemoWithCallbacks {
+public class ProducerDemoKeys {
 
     private static final Logger log =
-            LoggerFactory.getLogger(ProducerDemoWithCallbacks.class);
+            LoggerFactory.getLogger(ProducerDemoKeys.class);
 
     public static void main(String[] args) {
 
@@ -26,26 +26,25 @@ public class ProducerDemoWithCallbacks {
         //set producer properties
         properties.setProperty("key.serializer", StringSerializer.class.getName());
         properties.setProperty("value.serializer", StringSerializer.class.getName());
-        properties.setProperty("batchsize","400");
 
         //create the producer
         KafkaProducer<String,String> producer = new KafkaProducer<>(properties);
 
-        for(int j=0;j<10;j++){
+        for(int j=0;j<2;j++){
             for(int i=0;i<10;i++){
+                String topic = "demo_java";
+                String key = "id_" + i;
+                String value = "hello world "+i;
+
                 //create a producer record
-                ProducerRecord<String,String> producerRecord = new ProducerRecord<>("demo_java","hello world" + i);
+                ProducerRecord<String,String> producerRecord = new ProducerRecord<>(topic , key,value);
 
                 //send the data
                 producer.send(producerRecord, new Callback() {
                     @Override
                     public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                         if(e ==null){
-                            log.info("Recoed new metedata \n" +
-                                    "topic: " + recordMetadata.topic() + "\n" +
-                                    "Partitions: " + recordMetadata.partition() + "\n"+
-                                    "offset: " + recordMetadata.offset() + "\n" +
-                                    "TimeStamp: " + recordMetadata.timestamp());
+                            log.info("key: " + key  + " | Partitions: " + recordMetadata.partition());
                         }else{
                             log.error("error while producing " + e);
                         }
