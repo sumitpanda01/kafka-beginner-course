@@ -13,6 +13,7 @@
     <module>kafka-basics</module>
       <module>kafka-producer-wikimedia</module>
       <module>kafka-consumer-opensearch</module>
+      <module>kafka-stream-wikimedia</module>
   </modules>
 
   <properties>
